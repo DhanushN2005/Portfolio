@@ -1507,56 +1507,206 @@
             margin-bottom: 1rem;
         }
 
-        .experience-timeline {
-            max-width: 900px;
+        .experience-wrap {
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        .experience-item {
-            margin-bottom: 2.5rem;
+        .exp-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
             border-left: 4px solid var(--accent);
-            padding: 2rem 2.2rem;
         }
 
-        .experience-item:hover {
-            transform: none;
+        .exp-header-main {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
         }
 
-        .experience-item h4 {
-            padding-bottom: 0.4rem;
-            border-bottom: 1px solid var(--glass-border);
+        .exp-logo, .exp-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--gradient);
+            color: #000;
+            font-size: 1.3rem;
         }
 
-        .experience-item h3 {
+        .exp-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+        }
+
+        [data-theme="light"] .exp-logo,
+        [data-theme="light"] .exp-icon {
+            color: #fff;
+        }
+
+        .exp-header h3 {
             font-size: 1.5rem;
-            margin-bottom: 0.3rem;
+            line-height: 1.25;
+            color: var(--text-primary);
+        }
+
+        .exp-header .company {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .exp-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .exp-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .exp-chip i {
             color: var(--accent);
         }
 
-        .experience-item .company {
+        .exp-chip.live {
             color: var(--text-primary);
-            font-weight: 600;
+            border-color: rgba(0, 200, 120, 0.45);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00c878;
+            box-shadow: 0 0 0 0 rgba(0, 200, 120, 0.6);
+            animation: livePulse 2s ease-out infinite;
+        }
+
+        @keyframes livePulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 200, 120, 0.6); }
+            100% { box-shadow: 0 0 0 10px rgba(0, 200, 120, 0); }
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2rem;
+        }
+
+        .exp-card {
+            display: flex;
+            flex-direction: column;
+            padding: 1.8rem;
+        }
+
+        .exp-card-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1rem;
         }
 
-        .experience-item h4 {
-            margin: 1.5rem 0 0.5rem;
+        .exp-card h4 {
+            font-size: 1.3rem;
+            line-height: 1.25;
             color: var(--text-primary);
-            font-size: 1.15rem;
         }
 
-        .experience-item .project-note {
+        .exp-type {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .exp-card .project-note {
             color: var(--text-secondary);
             font-size: 0.95rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
 
-        .experience-item .feature-list {
-            margin: 0.5rem 0 0;
+        .exp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .experience-item .feature-list li strong {
+        .exp-tags span {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: rgba(0, 242, 255, 0.08);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+        }
+
+        [data-theme="light"] .exp-tags span {
+            background: rgba(10, 126, 164, 0.08);
+            border-color: rgba(10, 126, 164, 0.25);
+        }
+
+        .exp-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+
+        .exp-list li {
+            display: flex;
+            gap: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 0.93rem;
+            line-height: 1.55;
+        }
+
+        .exp-list li > i {
+            flex-shrink: 0;
+            margin-top: 0.3rem;
+            color: var(--accent);
+            font-size: 0.8rem;
+        }
+
+        .exp-list strong {
+            display: block;
             color: var(--text-primary);
+            font-size: 0.98rem;
+            margin-bottom: 0.1rem;
+        }
+
+        @media (max-width: 860px) {
+            .exp-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exp-header {
+                padding: 1.4rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1743,32 +1893,62 @@
     <section id="experience" class="section bg-alt">
         <div class="container">
             <h2 class="section-title reveal">Experience</h2>
-            <div class="experience-timeline">
-                <div class="experience-item timeline-item glass reveal">
-                    <span class="date">May 2026 – Present</span>
-                    <h3>Software Developer Intern</h3>
-                    <p class="company">Adya AI &nbsp;|&nbsp; Remote</p>
+            <div class="experience-wrap">
+                <div class="exp-header glass reveal">
+                    <div class="exp-header-main">
+                        <span class="exp-logo"><i class="fas fa-briefcase" aria-hidden="true"></i></span>
+                        <div>
+                            <h3>Software Developer Intern</h3>
+                            <p class="company">Adya AI</p>
+                        </div>
+                    </div>
+                    <div class="exp-meta">
+                        <span class="exp-chip"><i class="fas fa-calendar-days" aria-hidden="true"></i> May 2026 &ndash; Present</span>
+                        <span class="exp-chip"><i class="fas fa-location-dot" aria-hidden="true"></i> Remote</span>
+                        <span class="exp-chip live"><span class="live-dot"></span> Current role</span>
+                    </div>
+                </div>
 
-                    <h4>Castlewise — Client Project</h4>
-                    <p class="project-note">Role-based, multilevel platform for housing society and apartment redevelopment (live in production).</p>
-                    <ul class="feature-list">
-                        <li><strong>Tender &amp; Business Flow:</strong> Implemented the end-to-end tender flow and core business workflows, covering the tender lifecycle for society and apartment redevelopment projects.</li>
-                        <li><strong>Multilevel Role-Based System:</strong> Built role-based access controls for screens, permissions and actions so each stakeholder sees functionality relevant to their role.</li>
-                        <li><strong>Platform Modules:</strong> Implemented the Notification module, Payment Master and super-admin screens for user alerts, centralized administration and payment configuration.</li>
-                        <li><strong>Feature Delivery:</strong> Delivered client-requested features based on feedback while keeping changes aligned with agreed requirements.</li>
-                        <li><strong>Defect Resolution &amp; QA:</strong> Resolved Jira-tracked defects, verified fixes through testing, maintained ticket updates and covered QA responsibilities during tester absence.</li>
-                        <li><strong>Client Collaboration:</strong> Joined client meetings to clarify requirements and fix/feature questions, and shared ticket-status updates to support coordination between client and team.</li>
-                    </ul>
+                <div class="exp-grid">
+                    <article class="exp-card glass reveal">
+                        <div class="exp-card-head">
+                            <span class="exp-icon"><i class="fas fa-building" aria-hidden="true"></i></span>
+                            <div>
+                                <h4>Castlewise</h4>
+                                <p class="exp-type">Client Project</p>
+                            </div>
+                        </div>
+                        <p class="project-note">Role-based, multilevel platform for housing society and apartment redevelopment (live in production).</p>
+                        <div class="exp-tags"><span>Live in production</span><span>Role-based access</span><span>Jira &amp; QA</span></div>
+                        <ul class="exp-list">
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Tender &amp; Business Flow</strong>Implemented the end-to-end tender flow and core business workflows, covering the tender lifecycle for society and apartment redevelopment projects.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Multilevel Role-Based System</strong>Built role-based access controls for screens, permissions and actions so each stakeholder sees functionality relevant to their role.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Platform Modules</strong>Implemented the Notification module, Payment Master and super-admin screens for user alerts, centralized administration and payment configuration.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Feature Delivery</strong>Delivered client-requested features based on feedback while keeping changes aligned with agreed requirements.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Defect Resolution &amp; QA</strong>Resolved Jira-tracked defects, verified fixes through testing, maintained ticket updates and covered QA responsibilities during tester absence.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Client Collaboration</strong>Joined client meetings to clarify requirements and fix/feature questions, and shared ticket-status updates to support coordination between client and team.</div></li>
+                        </ul>
+                    </article>
 
-                    <h4>RAS — Product Development</h4>
-                    <ul class="feature-list">
-                        <li><strong>UI Modernization:</strong> Redesigned and refreshed the user interface to improve usability and visual consistency.</li>
-                        <li><strong>Forecasting:</strong> Fine-tuned the Data Analyst agent's forecasting capability to improve forecasts generated from user datasets.</li>
-                        <li><strong>3D Chart Generation:</strong> Extended the Data Analyst agent with 3D chart generation so results can be presented as 3D visualizations instead of standard 2D charts.</li>
-                        <li><strong>3D Dashboard:</strong> Built a unified 3D dashboard combining globe, bar and line charts in one visual workspace.</li>
-                        <li><strong>AI Story Mode:</strong> Developed a story mode that converts analysis results into animated slide presentations with AI voice narration.</li>
-                        <li><strong>Platform Modules:</strong> Implemented Notification, Payment and Sharing master modules for alerts, payment handling and content sharing.</li>
-                    </ul>
+                    <article class="exp-card glass reveal">
+                        <div class="exp-card-head">
+                            <span class="exp-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+                            <div>
+                                <h4>RAS</h4>
+                                <p class="exp-type">Product Development</p>
+                            </div>
+                        </div>
+                        <p class="project-note">AI data-analyst product: forecasting, 3D visualization and narrated story presentations.</p>
+                        <div class="exp-tags"><span>Data Analyst agent</span><span>3D visualization</span><span>Forecasting</span></div>
+                        <ul class="exp-list">
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>UI Modernization</strong>Redesigned and refreshed the user interface to improve usability and visual consistency.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Forecasting</strong>Fine-tuned the Data Analyst agent's forecasting capability to improve forecasts generated from user datasets.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>3D Chart Generation</strong>Extended the Data Analyst agent with 3D chart generation so results can be presented as 3D visualizations instead of standard 2D charts.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>3D Dashboard</strong>Built a unified 3D dashboard combining globe, bar and line charts in one visual workspace.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>AI Story Mode</strong>Developed a story mode that converts analysis results into animated slide presentations with AI voice narration.</div></li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i><div><strong>Platform Modules</strong>Implemented Notification, Payment and Sharing master modules for alerts, payment handling and content sharing.</div></li>
+                        </ul>
+                    </article>
                 </div>
             </div>
         </div>
