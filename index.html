@@ -1709,6 +1709,12 @@
             }
         }
 
+        .leetcode-note {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -1815,7 +1821,7 @@
                 <li><a href="#achievements" class="nav-link">Achievements</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li>
-                    <a href="Dhanush_N_Resume.pdf" class="resume-btn" target="_blank">
+                    <a href="https://drive.google.com/file/d/19l5zgYrOKvprCd4cLOaGbHJWsy6ZFfeb/view?usp=sharing" class="resume-btn" target="_blank" rel="noopener noreferrer">
                         <i class="fas fa-file-pdf"></i> Resume
                     </a>
                 </li>
@@ -2216,8 +2222,8 @@
                             <p>Problems Solved</p>
                         </div>
                         <div class="leetcode-stat-card">
-                            <h3 id="acceptanceRate">-</h3>
-                            <p>Acceptance Rate</p>
+                            <h3 id="totalSubmissions">-</h3>
+                            <p>Total Submissions</p>
                         </div>
                         <div class="leetcode-stat-card">
                             <h3 id="ranking">-</h3>
@@ -2270,6 +2276,7 @@
                        style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; color: var(--accent); text-decoration: none; font-weight: 600; transition: all 0.3s ease;">
                         <i class="fas fa-external-link-alt"></i> View Full Profile
                     </a>
+                    <p id="leetcodeNote" class="leetcode-note" role="status"></p>
                 </div>
             </div>
         </div>
@@ -2360,7 +2367,7 @@
                     <a href="https://github.com/DhanushN2005" target="_blank" class="c-link">
                         <i class="fab fa-github"></i> GitHub
                     </a>
-                    <a href="https://drive.google.com/file/d/1GecgiR4UeG6h92uCQoHOSjTmz0LlSASD/view?usp=sharing" target="_blank" class="c-link">
+                    <a href="https://drive.google.com/file/d/19l5zgYrOKvprCd4cLOaGbHJWsy6ZFfeb/view?usp=sharing" target="_blank" class="c-link">
                         <i class="fas fa-file-pdf"></i> Resume (Drive)
                     </a>
                     <a href="tel:+919342514011" target="_blank" class="c-link">
@@ -2792,103 +2799,88 @@
             });
         });
     
+        const LEETCODE_USERNAME = 'dhanush005';
+
+        // Last real stats, shown only (and labelled as a snapshot) if every live source fails.
+        const LEETCODE_SNAPSHOT = {
+            solved: 246, easy: 149, medium: 83, hard: 14,
+            totalEasy: 974, totalMedium: 2136, totalHard: 986,
+            ranking: 679501, submissions: 434, date: '31 Oct 2026'
+        };
+
+        async function fetchJson(url, timeout = 10000) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return await response.json();
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        function allSubmissions(list) {
+            const all = Array.isArray(list) && list.find(item => item.difficulty === 'All');
+            return all ? all.submissions : null;
+        }
+
+        // Live sources, tried in order. Anything a source does not provide stays null (never invented).
+        const LEETCODE_SOURCES = [
+            async user => {
+                const d = await fetchJson(`https://leetcode-api-faisalshohag.vercel.app/${user}`);
+                if (typeof d.totalSolved !== 'number') throw new Error('unexpected response');
+                return {
+                    solved: d.totalSolved, easy: d.easySolved, medium: d.mediumSolved, hard: d.hardSolved,
+                    totalEasy: d.totalEasy ?? null, totalMedium: d.totalMedium ?? null, totalHard: d.totalHard ?? null,
+                    ranking: d.ranking ?? null, submissions: allSubmissions(d.totalSubmissions)
+                };
+            },
+            async user => {
+                const [solved, profile] = await Promise.all([
+                    fetchJson(`https://alfa-leetcode-api.onrender.com/${user}/solved`),
+                    fetchJson(`https://alfa-leetcode-api.onrender.com/${user}`).catch(() => ({}))
+                ]);
+                if (typeof solved.solvedProblem !== 'number') throw new Error('unexpected response');
+                return {
+                    solved: solved.solvedProblem, easy: solved.easySolved, medium: solved.mediumSolved, hard: solved.hardSolved,
+                    totalEasy: solved.totalEasy ?? null, totalMedium: solved.totalMedium ?? null, totalHard: solved.totalHard ?? null,
+                    ranking: profile.ranking ?? null, submissions: allSubmissions(solved.totalSubmissionNum)
+                };
+            }
+        ];
+
+        function setText(id, value) {
+            document.getElementById(id).textContent = value;
+        }
+
+        function renderLeetCode(stats, note) {
+            animateCount(document.getElementById('totalSolved'), stats.solved);
+            setText('totalSubmissions', stats.submissions != null ? stats.submissions.toLocaleString() : '—');
+            setText('ranking', stats.ranking != null ? stats.ranking.toLocaleString() : '—');
+
+            [['easy', stats.easy, stats.totalEasy], ['medium', stats.medium, stats.totalMedium], ['hard', stats.hard, stats.totalHard]]
+                .forEach(([level, solved, total]) => {
+                    setText(level + 'Solved', solved ?? '—');
+                    setText(level + 'Total', total ?? '—');
+                    const percent = solved != null && total ? Math.max((solved / total) * 100, solved > 0 ? 1.5 : 0) : 0;
+                    document.getElementById(level + 'Progress').style.width = percent + '%';
+                });
+
+            document.getElementById('leetcodeNote').textContent = note || '';
+        }
+
         async function fetchLeetCodeStats() {
-            const username = 'dhanush005';
-            
-            try {
-                const response = await fetch(`https://alfa-leetcode-api.onrender.com/${username}/solved`);
-                const data = await response.json();
-                
-                console.log('LeetCode Data:', data);
-                
-                if (data && data.solvedProblem !== undefined) {
-                    const totalSolved = data.solvedProblem || 0;
-                    const easySolved = data.easySolved || 0;
-                    const easyTotal = data.totalEasy || 922;
-                    const mediumSolved = data.mediumSolved || 0;
-                    const mediumTotal = data.totalMedium || 1993;
-                    const hardSolved = data.hardSolved || 0;
-                    const hardTotal = data.totalHard || 902;
-                    const acceptanceRate = data.acceptanceRate || 70.81;
-
-                    animateCount(document.getElementById('totalSolved'), totalSolved);
-                    document.getElementById('acceptanceRate').textContent = acceptanceRate.toFixed(1) + '%';
-                    
-                    fetchLeetCodeRanking(username);
-
-                    document.getElementById('easySolved').textContent = easySolved;
-                    document.getElementById('easyTotal').textContent = easyTotal;
-                    document.getElementById('easyProgress').style.width = ((easySolved / easyTotal) * 100) + '%';
-
-                    document.getElementById('mediumSolved').textContent = mediumSolved;
-                    document.getElementById('mediumTotal').textContent = mediumTotal;
-                    document.getElementById('mediumProgress').style.width = ((mediumSolved / mediumTotal) * 100) + '%';
-
-                    document.getElementById('hardSolved').textContent = hardSolved;
-                    document.getElementById('hardTotal').textContent = hardTotal;
-                    document.getElementById('hardProgress').style.width = ((hardSolved / hardTotal) * 100) + '%';
-
-                } else {
-                    throw new Error('Invalid response from LeetCode API');
+            for (const source of LEETCODE_SOURCES) {
+                try {
+                    renderLeetCode(await source(LEETCODE_USERNAME));
+                    return;
+                } catch (error) {
+                    console.warn('LeetCode source failed:', error.message);
                 }
-            } catch (error) {
-                console.error('Error fetching LeetCode stats:', error);
-                tryAlternativeLeetCodeAPI(username);
             }
-        }
-
-        async function tryAlternativeLeetCodeAPI(username) {
-            try {
-                const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
-                const data = await response.json();
-                
-                if (data && data.totalSolved !== undefined) {
-                    document.getElementById('totalSolved').textContent = data.totalSolved;
-                    document.getElementById('acceptanceRate').textContent = (data.acceptanceRate || 70).toFixed(1) + '%';
-                    document.getElementById('ranking').textContent = data.ranking ? data.ranking.toLocaleString() : 'N/A';
-                    
-                    document.getElementById('easySolved').textContent = data.easySolved || 0;
-                    document.getElementById('mediumSolved').textContent = data.mediumSolved || 0;
-                    document.getElementById('hardSolved').textContent = data.hardSolved || 0;
-                } else {
-                    showFallbackStats();
-                }
-            } catch (error) {
-                console.error('Alternative API also failed:', error);
-                showFallbackStats();
-            }
-        }
-
-        async function fetchLeetCodeRanking(username) {
-            try {
-                const response = await fetch(`https://alfa-leetcode-api.onrender.com/${username}`);
-                const data = await response.json();
-                
-                if (data && data.ranking) {
-                    document.getElementById('ranking').textContent = data.ranking.toLocaleString();
-                }
-            } catch (error) {
-                console.log('Could not fetch ranking:', error);
-                document.getElementById('ranking').textContent = 'N/A';
-            }
-        }
-
-        function showFallbackStats() {
-            document.getElementById('totalSolved').textContent = '150+';
-            document.getElementById('acceptanceRate').textContent = '75%';
-            document.getElementById('ranking').textContent = 'N/A';
-            
-            document.getElementById('easySolved').textContent = '80';
-            document.getElementById('easyTotal').textContent = '827';
-            document.getElementById('easyProgress').style.width = '10%';
-            
-            document.getElementById('mediumSolved').textContent = '60';
-            document.getElementById('mediumTotal').textContent = '1927';
-            document.getElementById('mediumProgress').style.width = '3%';
-            
-            document.getElementById('hardSolved').textContent = '10';
-            document.getElementById('hardTotal').textContent = '753';
-            document.getElementById('hardProgress').style.width = '1%';
+            const snapshot = LEETCODE_SNAPSHOT;
+            renderLeetCode(snapshot, `Live stats are unavailable right now. Showing a saved snapshot from ${snapshot.date}.`);
         }
     </script>
 </body>
