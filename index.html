@@ -8,8 +8,15 @@
     <meta property="og:description" content="View my projects in AI, ML, and Full-Stack development.">
     <meta property="og:type" content="website">
     <title>Dhanush N | AI & Full-Stack Engineer</title>
+    <script>
+        try {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+        } catch (e) {}
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.css" integrity="sha384-UuB6deGAnAeGSShmQfNVypuoM4D1q+qgqcc3FRyZPVLuPc4psm5o1VShNhqmootN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
@@ -60,7 +67,7 @@
         }
 
         .section {
-            padding: 80px 0;
+            padding: 96px 0;
             position: relative;
         }
 
@@ -225,12 +232,12 @@
             box-shadow: 
                 0 0 40px var(--accent-glow),
                 0 0 80px rgba(0, 242, 255, 0.1);
-            animation: profilePulse 3s ease-in-out infinite;
+            animation: profilePulse 6s ease-in-out infinite;
         }
 
         @keyframes profilePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(0, 242, 255, 0.1); }
-            50% { transform: scale(1.05); box-shadow: 0 0 60px var(--accent-glow), 0 0 120px rgba(0, 242, 255, 0.2); }
+            50% { transform: scale(1.02); box-shadow: 0 0 60px var(--accent-glow), 0 0 120px rgba(0, 242, 255, 0.2); }
         }
 
         .hero h1 {
@@ -252,7 +259,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
-            animation: colorShift 4s ease-in-out infinite;
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
         }
 
         @keyframes colorShift {
@@ -415,8 +423,8 @@
 
         .glass:hover {
             border-color: var(--accent);
-            transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0, 242, 255, 0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0, 242, 255, 0.15);
         }
 
         .about-grid {
@@ -488,7 +496,6 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            animation: badgePulse 2s ease-in-out infinite;
         }
 
         @keyframes badgePulse {
@@ -591,7 +598,7 @@
         }
 
         .project-card {
-            height: 460px;
+            min-height: 420px;
             cursor: pointer;
             position: relative;
             perspective: 1000px;
@@ -603,10 +610,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Both faces share one grid cell, so the card grows to fit whichever face is taller */
         .project-card-inner {
             position: relative;
+            display: grid;
             width: 100%;
             height: 100%;
+            min-height: inherit;
             transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             transform-style: preserve-3d;
         }
@@ -616,9 +626,9 @@
         }
 
         .project-front, .project-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            grid-area: 1 / 1;
+            position: relative;
+            min-width: 0;
             backface-visibility: hidden;
             border-radius: 20px;
             padding: 2rem;
@@ -673,10 +683,21 @@
 
         .project-header h3 {
             font-size: 1.5rem;
+            line-height: 1.25;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+        }
+
+        .project-sub {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .project-back .feature-list li {
+            font-size: 0.92rem;
         }
 
         .project-desc {
@@ -750,7 +771,6 @@
             color: var(--accent);
             position: absolute;
             left: 0;
-            animation: bounce 2s ease-in-out infinite;
         }
 
         @keyframes bounce {
@@ -1157,6 +1177,328 @@
             }
         }
 
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0;
+            background: var(--gradient);
+            box-shadow: 0 0 12px var(--accent-glow);
+            z-index: 1100;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .section-title.reveal::after {
+            animation: none;
+            width: 0;
+            transition: width 0.9s cubic-bezier(0.23, 1, 0.32, 1) 0.3s;
+        }
+
+        .section-title.reveal-active::after {
+            width: 100px;
+        }
+
+        /* Animated achievements timeline */
+        .achievement-timeline {
+            max-width: 1000px;
+            padding: 1rem 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            transform: translateX(-50%);
+            background: var(--glass-border);
+            border-radius: 3px;
+        }
+
+        .timeline-progress {
+            width: 100%;
+            height: 0;
+            border-radius: 3px;
+            background: var(--gradient);
+            box-shadow: 0 0 14px var(--accent-glow);
+        }
+
+        .achievement-timeline .timeline-item {
+            width: calc(50% - 40px);
+            margin-bottom: 3rem;
+            overflow: visible;
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .achievement-timeline .timeline-item.glass::before {
+            display: none;
+        }
+
+        .achievement-timeline .timeline-item.tl-left {
+            margin-right: auto;
+            transform: translateX(-60px);
+        }
+
+        .achievement-timeline .timeline-item.tl-right {
+            margin-left: auto;
+            transform: translateX(60px);
+        }
+
+        .achievement-timeline .timeline-item.in-view {
+            opacity: 1;
+            transform: none;
+        }
+
+        .achievement-timeline .timeline-item.in-view:hover {
+            transform: translateY(-4px);
+        }
+
+        .achievement-timeline .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: calc(2rem + 8px);
+            width: 40px;
+            height: 2px;
+            background: var(--glass-border);
+            transform: scaleX(0);
+            transition: transform 0.5s ease 0.3s, background 0.3s ease;
+        }
+
+        .achievement-timeline .timeline-item.tl-left::after {
+            right: -40px;
+            transform-origin: left;
+        }
+
+        .achievement-timeline .timeline-item.tl-right::after {
+            left: -40px;
+            transform-origin: right;
+        }
+
+        .achievement-timeline .timeline-item.in-view::after {
+            transform: scaleX(1);
+        }
+
+        .achievement-timeline .timeline-item.passed::after {
+            background: var(--accent);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 2rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 3px solid var(--glass-border);
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s, background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            z-index: 2;
+        }
+
+        .tl-left .timeline-dot {
+            right: -49px;
+        }
+
+        .tl-right .timeline-dot {
+            left: -49px;
+        }
+
+        .in-view .timeline-dot {
+            transform: scale(1);
+        }
+
+        .passed .timeline-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 6px var(--accent-glow), 0 0 20px var(--accent-glow);
+        }
+
+        html.lenis, html.lenis body {
+            scroll-behavior: auto !important;
+        }
+
+        .hero-typed {
+            color: var(--text-secondary);
+            font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+            margin-bottom: 1.5rem;
+            min-height: 1.8em;
+            animation: fadeInUp 1.1s ease-out;
+        }
+
+        .hero-typed .typed-text {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .typed-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            margin-left: 3px;
+            vertical-align: text-bottom;
+            background: var(--accent);
+            animation: blink 1s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem 3rem;
+            margin-top: 3.5rem;
+            animation: fadeInUp 1.6s ease-out;
+        }
+
+        .hero-stat {
+            text-align: center;
+            min-width: 110px;
+        }
+
+        .hero-stat strong {
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat span {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* 3D tilt on hover (class toggled from JS on fine pointers only) */
+        .tilt-on {
+            transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px) !important;
+            transition: transform 0.12s ease-out, border-color 0.3s ease, box-shadow 0.3s ease !important;
+            will-change: transform;
+        }
+
+        /* Cursor spotlight on cards */
+        .glass:not(.timeline-item)::after,
+        .project-front::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 242, 255, 0.13), transparent 65%);
+        }
+
+        .glass:not(.timeline-item):hover::after,
+        .project-card:hover .project-front::after {
+            opacity: 1;
+        }
+
+        [data-theme="light"] .glass:not(.timeline-item)::after,
+        [data-theme="light"] .project-front::after {
+            background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(10, 126, 164, 0.12), transparent 65%);
+        }
+
+        .theme-toggle {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .nav-container {
+            gap: 1rem;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        [data-theme="light"] {
+            --bg: #f6f8fb;
+            --bg-alt: #eaf0f7;
+            --accent: #0a7ea4;
+            --accent-glow: rgba(10, 126, 164, 0.3);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --glass-bg: rgba(15, 23, 42, 0.04);
+            --glass-border: rgba(15, 23, 42, 0.12);
+            --gradient: linear-gradient(135deg, #0a7ea4, #4d5df1);
+            --gradient-alt: linear-gradient(135deg, #d6246e, #6d28d9);
+        }
+
+        [data-theme="light"] body {
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(10, 126, 164, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(214, 36, 110, 0.06) 0%, transparent 40%);
+        }
+
+        [data-theme="light"] nav,
+        [data-theme="light"] nav.scrolled,
+        [data-theme="light"] .nav-links.active {
+            background: rgba(246, 248, 251, 0.92);
+            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="light"] .glass,
+        [data-theme="light"] .project-front,
+        [data-theme="light"] .project-back,
+        [data-theme="light"] .leetcode-stat-card,
+        [data-theme="light"] .difficulty-card,
+        [data-theme="light"] .timeline-item {
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        [data-theme="light"] .edu-item {
+            background: rgba(10, 126, 164, 0.06);
+            border-color: rgba(10, 126, 164, 0.2);
+        }
+
+        [data-theme="light"] .tags span,
+        [data-theme="light"] .tech-stack span {
+            background: rgba(10, 126, 164, 0.08);
+            border-color: rgba(10, 126, 164, 0.25);
+        }
+
+        [data-theme="light"] .progress-bar {
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+        [data-theme="light"] .resume-btn,
+        [data-theme="light"] .primary-btn,
+        [data-theme="light"] .badge,
+        [data-theme="light"] .date,
+        [data-theme="light"] .git-btn,
+        [data-theme="light"] .c-link {
+            color: #fff;
+        }
+
         .hero-tagline {
             font-family: 'JetBrains Mono', monospace;
             color: var(--accent);
@@ -1172,6 +1514,17 @@
 
         .experience-item {
             margin-bottom: 2.5rem;
+            border-left: 4px solid var(--accent);
+            padding: 2rem 2.2rem;
+        }
+
+        .experience-item:hover {
+            transform: none;
+        }
+
+        .experience-item h4 {
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .experience-item h3 {
@@ -1230,6 +1583,44 @@
 
             .mobile-menu-btn {
                 display: block;
+                order: 2;
+            }
+
+            .theme-toggle {
+                order: 1;
+                margin-left: auto;
+            }
+
+            .timeline-line {
+                left: 16px;
+            }
+
+            .achievement-timeline .timeline-item {
+                width: calc(100% - 56px);
+            }
+
+            .achievement-timeline .timeline-item.tl-left,
+            .achievement-timeline .timeline-item.tl-right {
+                margin-left: 56px;
+                margin-right: 0;
+                transform: translateX(40px);
+            }
+
+            .achievement-timeline .timeline-item.in-view {
+                transform: none;
+            }
+
+            .tl-left .timeline-dot,
+            .tl-right .timeline-dot {
+                left: -49px;
+                right: auto;
+            }
+
+            .achievement-timeline .timeline-item.tl-left::after,
+            .achievement-timeline .timeline-item.tl-right::after {
+                left: -40px;
+                right: auto;
+                transform-origin: right;
             }
 
             .about-grid {
@@ -1255,7 +1646,8 @@
     </style>
 </head>
 <body>
-    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
+    <noscript><style>.reveal, .achievement-timeline .timeline-item { opacity: 1 !important; transform: none !important; } .timeline-dot { transform: scale(1) !important; }</style></noscript>
+    <div class="scroll-progress" id="scrollProgress"></div>
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">DHANUSH<span>.N</span></a>
@@ -1264,7 +1656,7 @@
                 <i class="fas fa-bars"></i>
             </button>
 
-            <ul class="nav-links" id="navLinks">
+            <ul class="nav-links" id="navLinks" data-lenis-prevent>
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
@@ -1278,6 +1670,8 @@
                     </a>
                 </li>
             </ul>
+
+            <button class="theme-toggle" id="themeToggle" aria-label="Switch to light theme"><i class="fas fa-sun" aria-hidden="true"></i></button>
         </div>
     </nav>
 
@@ -1294,6 +1688,7 @@
             </div>
            <p class="hero-tagline">AI SYSTEMS BUILDER | SOFTWARE DEVELOPER | ML & AGENTIC AI</p>
            <h1>Building Intelligence <br>From <span>Data to Deployment</span></h1>
+            <p class="hero-typed" aria-label="I build LLM-powered applications, RAG pipelines, agentic assistants and computer vision systems">I build <span class="typed-text" id="typedText" aria-hidden="true">LLM-powered applications</span><span class="typed-cursor" aria-hidden="true"></span></p>
             <p class="hero-sub">
                 AI & Data Science student who builds LLM-powered tools — from RAG pipelines to voice assistants to 3D molecule learning tools. National hackathon champion with a track record of turning ideas into working prototypes fast.
                 Currently a Software Developer Intern at Adya AI, shipping features to a live production platform and building AI data-analyst tooling.
@@ -1307,6 +1702,12 @@
                 <a href="#contact" class="secondary-btn">
                     <i class="fas fa-comment"></i> Contact Me
                 </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="hero-stat"><strong data-count="3">3</strong><span>Hackathon Wins</span></div>
+                <div class="hero-stat"><strong data-count="6">6</strong><span>Competitions &amp; Ranks</span></div>
+                <div class="hero-stat"><strong data-count="8.72" data-decimals="2">8.72</strong><span>CGPA</span></div>
             </div>
         </div>
     </section>
@@ -1432,15 +1833,18 @@
         <div class="container">
             <h2 class="section-title reveal">Projects</h2>
             <div class="project-grid">
-                <!-- TalentAI — Resume Intelligence Platform -->
+                <!-- TalentAI -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
                                 <span class="emoji">📄</span>
-                                <h3>TalentAI — Resume Intelligence Platform</h3>
+                                <div>
+                                    <h3>TalentAI</h3>
+                                    <p class="project-sub">Resume Intelligence Platform</p>
+                                </div>
                             </div>
-                            <p class="project-desc">AI-assisted recruitment workflow that evaluates resumes against job descriptions, extracts candidate information, and ranks profiles by semantic relevance.</p>
+                            <p class="project-desc">AI-assisted recruitment workflow that scores resumes against job descriptions, extracts candidate details and ranks profiles by semantic relevance.</p>
                             <div class="tech-stack">
                                 <span>Python</span><span>FastAPI</span><span>LLMs</span><span>RAG</span><span>NLP</span><span>ChromaDB</span><span>MySQL</span><span>JavaScript</span>
                             </div>
@@ -1449,26 +1853,29 @@
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>Resume intelligence &amp; matching against job descriptions</li>
+                                <li>Resume intelligence and job-description matching</li>
                                 <li>Retrieval-augmented ranking with FastAPI, RAG and ChromaDB</li>
-                                <li>GitHub and LinkedIn profile verification in the candidate review workflow</li>
+                                <li>GitHub and LinkedIn profile checks in the review workflow</li>
                             </ul>
-                            <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
+                            <a href="https://github.com/DhanushN2005" target="_blank" rel="noopener noreferrer" class="git-btn">
                                 <i class="fab fa-github"></i> View Code
                             </a>
                         </div>
                     </div>
                 </article>
 
-                <!-- Flexie 2.0 — Voice-Controlled Agentic Desktop Assistant -->
+                <!-- Flexie 2.0 -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
                                 <span class="emoji">🎙️</span>
-                                <h3>Flexie 2.0 — Voice-Controlled Agentic Desktop Assistant</h3>
+                                <div>
+                                    <h3>Flexie 2.0</h3>
+                                    <p class="project-sub">Voice-Controlled Agentic Desktop Assistant</p>
+                                </div>
                             </div>
-                            <p class="project-desc">Windows-native assistant that combines voice interaction with desktop and web actions to support hands-free task execution.</p>
+                            <p class="project-desc">Windows-native assistant that pairs voice interaction with desktop and web actions for hands-free task execution.</p>
                             <div class="tech-stack">
                                 <span>Python</span><span>FastAPI</span><span>Tool Orchestration</span><span>Memory</span><span>Desktop Automation</span>
                             </div>
@@ -1477,9 +1884,10 @@
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>Voice and desktop automation for hands-free task execution</li>
-                                <li>Goal planning, tool registration, DAG-based task planning, workflow execution and automation verification</li>
-                                <li>Memory management and tool orchestration for multi-step user workflows</li>
+                                <li>Hands-free voice and desktop automation</li>
+                                <li>Goal planning, tool registration and DAG-based task planning</li>
+                                <li>Workflow execution with automation verification</li>
+                                <li>Memory and tool orchestration for multi-step tasks</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005/Agentic-AI-Desktop-Assistant-" target="_blank" rel="noopener noreferrer" class="git-btn">
                                 <i class="fab fa-github"></i> View Repository
@@ -1488,15 +1896,18 @@
                     </div>
                 </article>
 
-                <!-- TNEA Pro AI — Admissions Counselling Assistant -->
+                <!-- TNEA Pro AI -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
                                 <span class="emoji">🎓</span>
-                                <h3>TNEA Pro AI — Admissions Counselling Assistant</h3>
+                                <div>
+                                    <h3>TNEA Pro AI</h3>
+                                    <p class="project-sub">Admissions Counselling Assistant</p>
+                                </div>
                             </div>
-                            <p class="project-desc">Engineering admissions counselling assistant that answers questions from TNEA brochures and policy documents by combining retrieved context with structured cutoff data.</p>
+                            <p class="project-desc">Answers questions from TNEA brochures and policy documents by combining retrieved context with structured cutoff data.</p>
                             <div class="tech-stack">
                                 <span>FastAPI</span><span>Groq/Llama</span><span>Ollama</span><span>ChromaDB</span><span>SQLite</span><span>LangChain</span><span>Docker</span>
                             </div>
@@ -1505,10 +1916,10 @@
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>RAG-based counselling over brochures and policy documents</li>
-                                <li>Cutoff calculations with Safe, Moderate and Dream recommendations (2021–2025 data)</li>
+                                <li>RAG-based counselling over brochures and policies</li>
+                                <li>Safe, Moderate and Dream recommendations from 2021–2025 cutoffs</li>
                                 <li>Searchable college profiles, choice-list exports and TFC centre locator</li>
-                                <li>Pagination, short-lived query caching, request debouncing/aborting and Docker Compose support</li>
+                                <li>Query caching, debouncing/aborting and Docker Compose support</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005/Tnea_Counseling" target="_blank" rel="noopener noreferrer" class="git-btn">
                                 <i class="fab fa-github"></i> View Repository
@@ -1517,15 +1928,18 @@
                     </div>
                 </article>
 
-                <!-- AI-Based 3D Molecule Visualizer -->
+                <!-- 3D Molecule Visualizer -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
                                 <span class="emoji">🔬</span>
-                                <h3>AI-Based 3D Molecule Visualizer</h3>
+                                <div>
+                                    <h3>3D Molecule Visualizer</h3>
+                                    <p class="project-sub">AI-Based Blender Pipeline</p>
+                                </div>
                             </div>
-                            <p class="project-desc">Pipeline that converts molecular XYZ coordinate data into 3D structures, with a lightweight web interface for exploring them.</p>
+                            <p class="project-desc">Converts molecular XYZ coordinate data into 3D structures, with a lightweight web interface for exploring them.</p>
                             <div class="tech-stack">
                                 <span>Python</span><span>Blender Python API</span><span>HTML/CSS</span><span>3D Model Export</span>
                             </div>
@@ -1534,9 +1948,9 @@
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>XYZ coordinates to 3D structures with automated scene and model generation via Blender scripting</li>
-                                <li>Models exported as reusable GLB assets with a lightweight web interface</li>
-                                <li>Voice-assisted interaction for experiential science learning</li>
+                                <li>XYZ data to 3D scenes and models via Blender scripting</li>
+                                <li>Reusable GLB exports with a lightweight web interface</li>
+                                <li>Voice-assisted interaction for science learning</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005/Ai-Based-3d---molecule-visualizer" target="_blank" rel="noopener noreferrer" class="git-btn">
                                 <i class="fab fa-github"></i> View Repository
@@ -1545,13 +1959,16 @@
                     </div>
                 </article>
 
-                <!-- E-Waste Deconstructor — Computer Vision &amp; Digital Twin -->
+                <!-- E-Waste Deconstructor -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
                                 <span class="emoji">♻️</span>
-                                <h3>E-Waste Deconstructor — Computer Vision &amp; Digital Twin</h3>
+                                <div>
+                                    <h3>E-Waste Deconstructor</h3>
+                                    <p class="project-sub">Computer Vision &amp; Digital Twin</p>
+                                </div>
                             </div>
                             <p class="project-desc">YOLO-based workflow that identifies and classifies e-waste items and estimates hazard severity to inform safer handling.</p>
                             <div class="tech-stack">
@@ -1562,9 +1979,9 @@
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>Computer vision classification of e-waste items with hazard severity estimation</li>
-                                <li>Digital-twin simulation with a live view of deconstruction workflow stages</li>
-                                <li>Automated safe-deconstruction recommendations on a web dashboard</li>
+                                <li>Classification of e-waste items with hazard severity estimates</li>
+                                <li>Digital-twin simulation with a live view of process stages</li>
+                                <li>Safe-deconstruction recommendations on a web dashboard</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005/E-waste-deconstructor---digital-twin" target="_blank" rel="noopener noreferrer" class="git-btn">
                                 <i class="fab fa-github"></i> View Repository
@@ -1681,33 +2098,40 @@
     <section id="achievements" class="section">
         <div class="container">
             <h2 class="section-title reveal">Achievements</h2>
-            <div class="achievement-timeline">
-                <div class="timeline-item glass reveal">
-                    <span class="date">01/2026</span>
-                    <h3>🥇 National Hackathon Winner</h3>
-                    <p>IIT Kharagpur & Shiv Nadar University.</p>
-                </div>
-                <div class="timeline-item glass reveal">
+            <div class="achievement-timeline" id="achievementTimeline">
+                <div class="timeline-line"><div class="timeline-progress" id="timelineProgress"></div></div>
+                <div class="timeline-item glass tl-left">
+                    <span class="timeline-dot"></span>
                     <span class="date">02/2026</span>
                     <h3>🏆 Top 10 - Hacknation 2026</h3>
                     <p>4th Global AI Hackathon.</p>
                 </div>
-                <div class="timeline-item glass reveal">
+                <div class="timeline-item glass tl-right">
+                    <span class="timeline-dot"></span>
+                    <span class="date">01/2026</span>
+                    <h3>🥇 National Hackathon Winner</h3>
+                    <p>IIT Kharagpur & Shiv Nadar University.</p>
+                </div>
+                <div class="timeline-item glass tl-left">
+                    <span class="timeline-dot"></span>
                     <span class="date">10/2025</span>
                     <h3>🥇 AIM'25 Winner</h3>
                     <p>Secured first place at Infynd's Hackathon.</p>
                 </div>
-                <div class="timeline-item glass reveal">
+                <div class="timeline-item glass tl-right">
+                    <span class="timeline-dot"></span>
                     <span class="date">09/2025</span>
                     <h3>🥇 HackZilla 25 Winner</h3>
                     <p>KPR Institute of Technology, IEEE ComSoc.</p>
                 </div>
-                <div class="timeline-item glass reveal">
+                <div class="timeline-item glass tl-left">
+                    <span class="timeline-dot"></span>
                     <span class="date">09/2025</span>
                     <h3>🎯 Top Finalist - HackBattle'25</h3>
                     <p>VIT Vellore.</p>
                 </div>
-                <div class="timeline-item glass reveal">
+                <div class="timeline-item glass tl-right">
+                    <span class="timeline-dot"></span>
                     <span class="date">03/2025</span>
                     <h3>🏅 33rd Rank - FIFS Gameathon 2.0</h3>
                     <p>National-level sports data analytics competition.</p>
@@ -1771,6 +2195,7 @@
         <p>Built with <i class="fas fa-code" style="color: var(--accent);"></i> & <i class="fas fa-brain" style="color: var(--accent);"></i> by Dhanush N © 2026</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" integrity="sha384-eD5ubmuCcvTdCADWuSchJYE7wcj2nzNr0itbrh6w/KJyBiltSZ8w3VFRBSWu5YQ8" crossorigin="anonymous"></script>
     <script>
         const GITHUB_USERNAME = 'DhanushN2005';
         
@@ -1786,9 +2211,9 @@
                 const totalStars = publicRepos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
                 const totalForks = publicRepos.reduce((sum, repo) => sum + repo.forks_count, 0);
                 
-                document.getElementById('repoCount').textContent = userData.public_repos;
-                document.getElementById('totalStars').textContent = totalStars;
-                document.getElementById('totalForks').textContent = totalForks;
+                animateCount(document.getElementById('repoCount'), userData.public_repos);
+                animateCount(document.getElementById('totalStars'), totalStars);
+                animateCount(document.getElementById('totalForks'), totalForks);
                 
                 const topRepos = publicRepos
                     .sort((a, b) => {
@@ -1899,6 +2324,21 @@
             setTimeout(() => reveal(), 100);
         }
         
+        const themeToggle = document.getElementById('themeToggle');
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const light = theme === 'light';
+            themeToggle.innerHTML = `<i class="fas ${light ? 'fa-moon' : 'fa-sun'}" aria-hidden="true"></i>`;
+            themeToggle.setAttribute('aria-label', light ? 'Switch to dark theme' : 'Switch to light theme');
+            try { localStorage.setItem('theme', theme); } catch (e) {}
+        }
+
+        applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+        themeToggle.addEventListener('click', () => {
+            applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        });
+
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         
@@ -1974,10 +2414,14 @@
                 
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                    if (lenis) {
+                        lenis.scrollTo(targetElement, { offset: -80 });
+                    } else {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             });
         });
@@ -1986,15 +2430,171 @@
             const reveals = document.querySelectorAll(".reveal");
             const windowHeight = window.innerHeight;
             const elementVisible = 100;
+            let batch = 0;
             
             reveals.forEach(element => {
                 const elementTop = element.getBoundingClientRect().top;
                 
                 if (elementTop < windowHeight - elementVisible) {
-                    element.classList.add("reveal-active");
+                    if (!element.classList.contains("reveal-active")) {
+                        // stagger elements that appear together, then clear so hover transitions stay instant
+                        element.style.transitionDelay = Math.min(batch++, 6) * 0.08 + 's';
+                        element.classList.add("reveal-active");
+                        setTimeout(() => { element.style.transitionDelay = ''; }, 1400);
+                    }
                 }
             });
         }
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+        // Smooth scrolling (Lenis); falls back to native scrolling if the CDN is blocked or motion is reduced
+        let lenis = null;
+        if (!prefersReduced && window.Lenis) {
+            lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+            const lenisFrame = time => {
+                lenis.raf(time);
+                requestAnimationFrame(lenisFrame);
+            };
+            requestAnimationFrame(lenisFrame);
+        }
+
+        // Hero typing effect
+        const typedEl = document.getElementById('typedText');
+        const typedPhrases = [
+            'LLM-powered applications',
+            'RAG pipelines',
+            'agentic desktop assistants',
+            'computer vision systems',
+            'full-stack AI products'
+        ];
+        if (typedEl && !prefersReduced) {
+            let phrase = 0, chars = 0, deleting = false;
+            const typeStep = () => {
+                const word = typedPhrases[phrase];
+                typedEl.textContent = word.slice(0, chars);
+                let delay = deleting ? 35 : 70;
+                if (!deleting && chars === word.length) {
+                    deleting = true;
+                    delay = 1600;
+                } else if (deleting && chars === 0) {
+                    deleting = false;
+                    phrase = (phrase + 1) % typedPhrases.length;
+                    delay = 400;
+                } else {
+                    chars += deleting ? -1 : 1;
+                }
+                setTimeout(typeStep, delay);
+            };
+            typedEl.textContent = '';
+            typeStep();
+        }
+
+        // Count-up numbers when they scroll into view
+        function animateCount(el, target, { decimals = 0, suffix = '', duration = 1400 } = {}) {
+            const render = value => { el.textContent = value.toFixed(decimals) + suffix; };
+            if (prefersReduced) { render(target); return; }
+            render(0);
+            const run = () => {
+                const start = performance.now();
+                const step = now => {
+                    const t = Math.min((now - start) / duration, 1);
+                    render(target * (1 - Math.pow(1 - t, 3)));
+                    if (t < 1) requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            };
+            const io = new IntersectionObserver(([entry]) => {
+                if (entry.isIntersecting) {
+                    io.disconnect();
+                    run();
+                }
+            }, { threshold: 0.4 });
+            io.observe(el);
+        }
+
+        document.querySelectorAll('[data-count]').forEach(el => {
+            animateCount(el, parseFloat(el.dataset.count), {
+                decimals: parseInt(el.dataset.decimals || '0', 10),
+                suffix: el.dataset.suffix || ''
+            });
+        });
+
+        // Card tilt + cursor spotlight (mouse only)
+        if (finePointer) {
+            const tiltSelector = '.skill-category, .stat-card, .leetcode-stat-card, .project-card';
+
+            document.addEventListener('pointermove', e => {
+                if (!e.target.closest) return;
+
+                const host = e.target.closest('.glass, .project-card');
+                if (host) {
+                    const r = host.getBoundingClientRect();
+                    host.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+                    host.style.setProperty('--my', (e.clientY - r.top) + 'px');
+                }
+
+                const card = e.target.closest(tiltSelector);
+                if (card) {
+                    const r = card.getBoundingClientRect();
+                    const px = (e.clientX - r.left) / r.width - 0.5;
+                    const py = (e.clientY - r.top) / r.height - 0.5;
+                    card.style.setProperty('--ry', (px * 8) + 'deg');
+                    card.style.setProperty('--rx', (-py * 8) + 'deg');
+                    card.classList.add('tilt-on');
+                }
+            });
+
+            document.addEventListener('pointerout', e => {
+                const card = e.target.closest && e.target.closest(tiltSelector);
+                if (card && !card.contains(e.relatedTarget)) {
+                    card.classList.remove('tilt-on');
+                    card.style.removeProperty('--rx');
+                    card.style.removeProperty('--ry');
+                }
+            });
+        }
+
+        // Achievements timeline + page scroll progress
+        const scrollBar = document.getElementById('scrollProgress');
+        const tlWrap = document.getElementById('achievementTimeline');
+        const tlProgress = document.getElementById('timelineProgress');
+        const tlItems = tlWrap.querySelectorAll('.timeline-item');
+
+        const tlObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    tlObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.25 });
+        tlItems.forEach(item => tlObserver.observe(item));
+
+        let scrollTicking = false;
+        function updateScrollEffects() {
+            scrollTicking = false;
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            scrollBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+
+            const marker = window.innerHeight * 0.6;
+            const rect = tlWrap.getBoundingClientRect();
+            const progress = Math.min(Math.max((marker - rect.top) / rect.height, 0), 1);
+            tlProgress.style.height = (progress * 100) + '%';
+            tlItems.forEach(item => {
+                item.classList.toggle('passed', item.getBoundingClientRect().top + 41 < marker);
+            });
+        }
+        function requestScrollUpdate() {
+            if (!scrollTicking) {
+                scrollTicking = true;
+                requestAnimationFrame(updateScrollEffects);
+            }
+        }
+        window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+        window.addEventListener('resize', requestScrollUpdate);
+        updateScrollEffects();
 
         window.addEventListener('DOMContentLoaded', () => {
             reveal();
@@ -2031,7 +2631,7 @@
                     const hardTotal = data.totalHard || 902;
                     const acceptanceRate = data.acceptanceRate || 70.81;
 
-                    document.getElementById('totalSolved').textContent = totalSolved;
+                    animateCount(document.getElementById('totalSolved'), totalSolved);
                     document.getElementById('acceptanceRate').textContent = acceptanceRate.toFixed(1) + '%';
                     
                     fetchLeetCodeRanking(username);
