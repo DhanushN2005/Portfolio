@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Dhanush N, an AI & Full-Stack Developer specializing in Machine Learning, NLP, and Computer Vision.">
+    <meta property="og:title" content="Dhanush N | AI & Full-Stack Developer">
+    <meta property="og:description" content="View my projects in AI, ML, and Full-Stack development.">
+    <meta property="og:type" content="website">
     <title>Dhanush N | AI & Full-Stack Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
@@ -585,7 +591,7 @@
         }
 
         .project-card {
-            height: 400px;
+            height: 460px;
             cursor: pointer;
             position: relative;
             perspective: 1000px;
@@ -1122,6 +1128,84 @@
             color: var(--text-secondary);
         }
 
+        .nav-link.current {
+            color: var(--accent);
+        }
+
+        .nav-link.current::after {
+            width: 100%;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        .project-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        .section[id] {
+            scroll-margin-top: 80px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        .hero-tagline {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: clamp(0.8rem, 1.8vw, 1rem);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .experience-timeline {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .experience-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .experience-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+            color: var(--accent);
+        }
+
+        .experience-item .company {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .experience-item h4 {
+            margin: 1.5rem 0 0.5rem;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+        }
+
+        .experience-item .project-note {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .experience-item .feature-list {
+            margin: 0.5rem 0 0;
+        }
+
+        .experience-item .feature-list li strong {
+            color: var(--text-primary);
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -1129,6 +1213,19 @@
 
             .nav-links.active {
                 display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                padding: 1.5rem 20px 2rem;
+                background: rgba(5, 5, 5, 0.97);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--glass-border);
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
             }
 
             .mobile-menu-btn {
@@ -1158,22 +1255,25 @@
     </style>
 </head>
 <body>
+    <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">DHANUSH<span>.N</span></a>
             
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
                 <i class="fas fa-bars"></i>
             </button>
 
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#achievements" class="nav-link">Achievements</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li>
-                    <a href="https://drive.google.com/file/d/1GecgiR4UeG6h92uCQoHOSjTmz0LlSASD/view?usp=sharing" class="resume-btn" target="_blank">
+                    <a href="Dhanush_N_Resume.pdf" class="resume-btn" target="_blank">
                         <i class="fas fa-file-pdf"></i> Resume
                     </a>
                 </li>
@@ -1186,14 +1286,17 @@
             <div class="profile-container">
                 <img 
                     src="https://drive.google.com/thumbnail?id=1W25PMAylB20La2RfJ3NGRkE_JHo6CplH&sz=w1000"
-                    alt="My Photo" 
+                    alt="Dhanush N - Profile Picture" 
                     class="profile-img"
+                    width="180" height="180"
+                    loading="eager"
                 >
             </div>
+           <p class="hero-tagline">AI SYSTEMS BUILDER | SOFTWARE DEVELOPER | ML & AGENTIC AI</p>
            <h1>Building Intelligence <br>From <span>Data to Deployment</span></h1>
             <p class="hero-sub">
-                B.Tech student in Artificial Intelligence & Data Science, building AI and full-stack applications 
-                using Machine Learning and Computer Vision.
+                AI & Data Science student who builds LLM-powered tools — from RAG pipelines to voice assistants to AR learning apps. National hackathon champion with a track record of turning ideas into working prototypes fast.
+                Currently a Software Developer Intern at Adya AI, shipping features to a live production platform and building AI data-analyst tooling.
             </p>
 
             
@@ -1216,6 +1319,7 @@
                     <p>I am a B.Tech student in Artificial Intelligence and Data Science at Karpagam College of Engineering.</p>
 <p>I build end-to-end AI and full-stack applications, working across machine learning, computer vision, and backend development.</p>
 <p>I focus on writing clean, scalable code and developing systems that solve real-world problems effectively.</p>
+<p>Since May 2026 I have been a Software Developer Intern at Adya AI, combining LLM reasoning, retrieval-augmented generation, analytics, automation and full-stack engineering — from client defect resolution and feature delivery to FastAPI services, conversational data assistants and interactive 3D visualization.</p>
 
                 </div>
                 <div class="education-card glass reveal">
@@ -1223,7 +1327,7 @@
                     <div class="edu-item">
                         <h4>B.Tech AI & Data Science</h4>
                         <p>Karpagam College of Engineering | 2023 - Present</p>
-                        <span class="badge">CGPA: 8.7</span>
+                        <span class="badge">CGPA: 8.72 / 10</span>
                     </div>
                     <div class="edu-item">
                         <h4>HSC (Higher Secondary)</h4>
@@ -1235,15 +1339,48 @@
         </div>
     </section>
 
-    <section id="skills" class="section bg-alt">
+    <section id="experience" class="section bg-alt">
+        <div class="container">
+            <h2 class="section-title reveal">Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item timeline-item glass reveal">
+                    <span class="date">May 2026 – Present</span>
+                    <h3>Software Developer Intern</h3>
+                    <p class="company">Adya AI &nbsp;|&nbsp; Remote</p>
+
+                    <h4>Castlewise — Client Project</h4>
+                    <p class="project-note">Role-based, multilevel platform for housing society and apartment redevelopment (live in production).</p>
+                    <ul class="feature-list">
+                        <li><strong>Tender &amp; Business Flow:</strong> Implemented the end-to-end tender flow and core business workflows, covering the tender lifecycle for society and apartment redevelopment projects.</li>
+                        <li><strong>Multilevel Role-Based System:</strong> Built role-based access controls for screens, permissions and actions so each stakeholder sees functionality relevant to their role.</li>
+                        <li><strong>Platform Modules:</strong> Implemented the Notification module, Payment Master and super-admin screens for user alerts, centralized administration and payment configuration.</li>
+                        <li><strong>Feature Delivery:</strong> Delivered client-requested features based on feedback while keeping changes aligned with agreed requirements.</li>
+                        <li><strong>Defect Resolution &amp; QA:</strong> Resolved Jira-tracked defects, verified fixes through testing, maintained ticket updates and covered QA responsibilities during tester absence.</li>
+                        <li><strong>Client Collaboration:</strong> Joined client meetings to clarify requirements and fix/feature questions, and shared ticket-status updates to support coordination between client and team.</li>
+                    </ul>
+
+                    <h4>RAS — Product Development</h4>
+                    <ul class="feature-list">
+                        <li><strong>UI Modernization:</strong> Redesigned and refreshed the user interface to improve usability and visual consistency.</li>
+                        <li><strong>Forecasting:</strong> Fine-tuned the Data Analyst agent's forecasting capability to improve forecasts generated from user datasets.</li>
+                        <li><strong>3D Chart Generation:</strong> Extended the Data Analyst agent with 3D chart generation so results can be presented as 3D visualizations instead of standard 2D charts.</li>
+                        <li><strong>3D Dashboard:</strong> Built a unified 3D dashboard combining globe, bar and line charts in one visual workspace.</li>
+                        <li><strong>AI Story Mode:</strong> Developed a story mode that converts analysis results into animated slide presentations with AI voice narration.</li>
+                        <li><strong>Platform Modules:</strong> Implemented Notification, Payment and Sharing master modules for alerts, payment handling and content sharing.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
         <div class="container">
             <h2 class="section-title reveal">Technical Skills</h2>
             <div class="skills-grid">
                 <div class="skill-category glass reveal">
                     <h4><i class="fas fa-code"></i> Languages</h4>
                     <div class="tags">
-                        <span>Python</span><span>Java</span><span>JavaScript</span><span>SQL</span>
-                        <span>HTML/CSS</span>
+                        <span>Python</span><span>Java</span><span>Go</span><span>JavaScript</span><span>SQL</span>
                     </div>
                 </div>
                 <div class="skill-category glass reveal">
@@ -1252,29 +1389,46 @@
                         <span>Machine Learning</span><span>Data Science</span>
                         <span>Computer Vision</span><span>NLP</span><span>Deep Learning</span>
                         <span>OpenCV</span><span>YOLO</span>
+                        <span>LLMs</span><span>Agentic AI</span><span>RAG</span><span>Semantic Search</span>
+                        <span>LightGBM</span><span>XGBoost</span><span>Scikit-learn</span>
+                        <span>TensorFlow</span><span>Keras</span>
                     </div>
                 </div>
                 <div class="skill-category glass reveal">
-                    <h4><i class="fas fa-server"></i> Frameworks</h4>
+                    <h4><i class="fas fa-server"></i> Web & Backend</h4>
                     <div class="tags">
-                        <span>Flask</span><span>Spring Boot</span>
-                        <span>React</span><span>Node.js</span>
-                        <span>FastAPI</span>
+                        <span>FastAPI</span><span>Flask</span><span>React</span><span>Node.js</span><span>Streamlit</span>
+                        <span>Spring Boot</span><span>REST APIs</span>
                     </div>
                 </div>
                 <div class="skill-category glass reveal">
-                    <h4><i class="fas fa-database"></i> Infrastructure</h4>
+                    <h4><i class="fas fa-database"></i> DBs & Tools</h4>
                     <div class="tags">
-                        <span>Docker</span><span>Kubernetes</span><span>Kafka</span>
-                        <span>AWS</span><span>PostgreSQL</span>
-                        <span>Git</span>
+                        <span>ChromaDB</span><span>PostgreSQL</span><span>MySQL</span><span>Snowflake</span>
+                        <span>Kafka</span><span>Docker</span><span>MLOps</span><span>Git</span>
+                        <span>SQLite</span><span>Pinecone</span><span>FAISS</span>
+                        <span>Docker Compose</span><span>Jira</span><span>Jupyter Notebook</span><span>VS Code</span>
+                    </div>
+                </div>
+                <div class="skill-category glass reveal">
+                    <h4><i class="fas fa-stream"></i> Data & Streaming</h4>
+                    <div class="tags">
+                        <span>Pandas</span><span>NumPy</span><span>Apache Kafka</span><span>Pathway</span>
+                        <span>Data Analysis</span><span>Anomaly Detection</span><span>Forecasting</span>
+                    </div>
+                </div>
+                <div class="skill-category glass reveal">
+                    <h4><i class="fas fa-chart-pie"></i> Visualization & 3D</h4>
+                    <div class="tags">
+                        <span>Chart.js</span><span>Tableau</span><span>Power BI</span><span>OpenCV</span>
+                        <span>Blender</span><span>Unity3D</span><span>ARCore/ARKit</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="section">
+    <section id="projects" class="section bg-alt">
         <div class="container">
             <h2 class="section-title reveal">Projects</h2>
             <div class="project-grid">
@@ -1283,12 +1437,12 @@
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
-                                <span class="emoji">🏏</span>
-                                <h3>Fantasy Cricket Selector</h3>
+                                <span class="emoji">📄</span>
+                                <h3>TalentAI</h3>
                             </div>
-                            <p class="project-desc">ML-powered optimization engine for selecting optimal playing XI based on player performance metrics.</p>
+                            <p class="project-desc">AI-powered resume intelligence platform that scores resumes and matches candidates to job descriptions.</p>
                             <div class="tech-stack">
-                                <span>Python</span><span>Scikit-learn</span><span>Flask</span>
+                                <span>Python</span><span>FastAPI</span><span>LLMs</span><span>RAG</span><span>ChromaDB</span><span>MySQL</span><span>Scikit-learn</span><span>Flask</span>
                                 <span>Pandas</span><span>NumPy</span>
                             </div>
                             <p class="flip-hint">Click to view features</p>
@@ -1296,10 +1450,12 @@
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>Player performance prediction</li>
-                                <li>Real-time statistic integration</li>
-                                <li>Budget-optimized team selection</li>
-                                <li>Win probability calculator</li>
+                                <li>Semantic search via RAG + ChromaDB</li>
+                                <li>GitHub/LinkedIn profile validation</li>
+                                <li>Automated candidate ranking</li>
+                                <li>FastAPI backend</li>
+                                <li>Resume-to-JD evaluation &amp; candidate info extraction</li>
+                                <li>Retrieval-augmented ranking by semantic relevance</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
                                 <i class="fab fa-github"></i> View Code
@@ -1308,28 +1464,59 @@
                     </div>
                 </article>
 
-                <!-- Emotion-Aware AI Chatbot -->
+                <!-- TNEA Pro AI -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
-                                <span class="emoji">🤖</span>
-                                <h3>AI Chatbot</h3>
+                                <span class="emoji">🎓</span>
+                                <h3>TNEA Pro AI</h3>
                             </div>
-                            <p class="project-desc">NLP chatbot that detects user emotions and adapts responses dynamically for empathetic interactions.</p>
+                            <p class="project-desc">Engineering admissions counselling assistant that answers questions from TNEA brochures and policy documents by combining retrieved context with structured cutoff data.</p>
                             <div class="tech-stack">
-                                <span>Python</span><span>TensorFlow</span><span>NLTK</span>
-                                <span>React</span><span>Flask</span>
+                                <span>FastAPI</span><span>Groq/Llama</span><span>Ollama</span>
+                                <span>ChromaDB</span><span>SQLite</span><span>LangChain</span><span>Docker</span>
                             </div>
                             <p class="flip-hint">Click to view features</p>
                         </div>
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>Real-time sentiment analysis</li>
-                                <li>7-emotion classification</li>
-                                <li>Context-aware conversations</li>
-                                <li>Multi-language support</li>
+                                <li>RAG-based counselling over brochures and policy documents</li>
+                                <li>Cutoff calculations with Safe, Moderate and Dream recommendations (2021–2025 data)</li>
+                                <li>Searchable college profiles and choice-list exports</li>
+                                <li>TFC centre locator, pagination and short-lived query caching</li>
+                                <li>Request debouncing/aborting and Docker Compose support</li>
+                            </ul>
+                            <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
+                                <i class="fab fa-github"></i> View Repository
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- AEIRS -->
+                <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
+                    <div class="project-card-inner">
+                        <div class="project-front">
+                            <div class="project-header">
+                                <span class="emoji">📊</span>
+                                <h3>AEIRS</h3>
+                            </div>
+                            <p class="project-desc">Autonomous Enterprise Intelligence & Reporting System that auto-generates insights from datasets and videos.</p>
+                            <div class="tech-stack">
+                                <span>Python</span><span>FastAPI</span><span>LLMs</span>
+                                <span>Groq API</span><span>ChromaDB</span>
+                            </div>
+                            <p class="flip-hint">Click to view features</p>
+                        </div>
+                        <div class="project-back">
+                            <h4>Key Features</h4>
+                            <ul class="feature-list">
+                                <li>Natural-language querying</li>
+                                <li>Real-time dashboards via Chart.js</li>
+                                <li>Automated sentiment analysis</li>
+                                <li>Video and dataset insights</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
                                 <i class="fab fa-github"></i> View Code
@@ -1348,7 +1535,7 @@
                             </div>
                             <p class="project-desc">Interactive 3D and AR-based molecular visualization system for immersive science learning.</p>
                             <div class="tech-stack">
-                                <span>Unity3D</span><span>Blender</span><span>ARCore</span>
+                                <span>Unity3D</span><span>Blender</span><span>Blender Python API</span><span>GLB</span><span>ARCore</span>
                                 <span>C#</span><span>Python</span>
                             </div>
                             <p class="flip-hint">Click to view features</p>
@@ -1360,6 +1547,8 @@
                                 <li>Interactive 3D manipulation</li>
                                 <li>Educational content integration</li>
                                 <li>Multi-platform support</li>
+                                <li>XYZ coordinate data to 3D structures via Blender scripting</li>
+                                <li>GLB export with a lightweight web interface and voice-assisted interaction</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
                                 <i class="fab fa-github"></i> View Code
@@ -1368,29 +1557,30 @@
                     </div>
                 </article>
 
-                <!-- Weapon Detection System -->
+                <!-- Flexie Voice Assistant -->
                 <article class="project-card reveal" onclick="this.classList.toggle('flipped')">
                     <div class="project-card-inner">
                         <div class="project-front">
                             <div class="project-header">
-                                <span class="emoji">🔫</span>
-                                <h3>Weapon Detection System</h3>
+                                <span class="emoji">🎙️</span>
+                                <h3>Flexie Voice Assistant</h3>
                             </div>
-                            <p class="project-desc">Real-time weapon detection system using computer vision for enhanced surveillance and public safety applications.</p>
+                            <p class="project-desc">AI personal voice assistant that automates desktop tasks and web actions using speech recognition. Flexie 2.0 is a Windows-native agentic version with DAG-based task planning.</p>
                             <div class="tech-stack">
-                                <span>YOLOv8</span><span>OpenCV</span><span>Python</span>
-                                <span>Flask</span><span>TensorFlow</span>
+                                <span>Python</span><span>FastAPI</span><span>SpeechRecognition</span><span>pyttsx3</span><span>Tool Orchestration</span><span>Memory</span>
+                                <span>Automation APIs</span>
                             </div>
                             <p class="flip-hint">Click to view features</p>
                         </div>
                         <div class="project-back">
                             <h4>Key Features</h4>
                             <ul class="feature-list">
-                                <li>Real-time detection with <99ms latency</li>
-                                <li>Multiple weapon classification</li>
-                                <li>Alert system with location tracking</li>
-                                <li>Video stream processing</li>
-                                <li>Cloud deployment ready</li>
+                                <li>Hands-free task execution</li>
+                                <li>OS-level control via Python</li>
+                                <li>Web API integrations</li>
+                                <li>Custom automation flows</li>
+                                <li>Goal planning, tool registration and DAG-based task planning</li>
+                                <li>Memory management and automation verification</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
                                 <i class="fab fa-github"></i> View Repository
@@ -1410,7 +1600,7 @@
                             <p class="project-desc">Digital twin system for automating e-waste classification and predicting hazardous levels in industrial environments.</p>
                             <div class="tech-stack">
                                 <span>YOLO</span><span>Unity3D</span><span>Python</span>
-                                <span>OpenCV</span><span>IoT Sensors</span>
+                                <span>OpenCV</span><span>IoT Sensors</span><span>HTML/CSS</span>
                             </div>
                             <p class="flip-hint">Click to view features</p>
                         </div>
@@ -1422,6 +1612,7 @@
                                 <li>Hazard level prediction</li>
                                 <li>3D visualization dashboard</li>
                                 <li>Automated sorting simulation</li>
+                                <li>Safe-deconstruction recommendations on a web dashboard</li>
                             </ul>
                             <a href="https://github.com/DhanushN2005" target="_blank" class="git-btn">
                                 <i class="fab fa-github"></i> View Repository
@@ -1464,7 +1655,7 @@
         </div>
     </section>
 
-    <section id="github-section" class="section bg-alt">
+    <section id="github-section" class="section">
         <div class="container">
             <h2 class="section-title reveal">GitHub</h2>
             
@@ -1492,7 +1683,7 @@
         </div>
     </section>
 
-    <section id="leetcode" class="section">
+    <section id="leetcode" class="section bg-alt">
         <div class="container">
             <h2 class="section-title reveal">Coding Profile</h2>
             <div class="glass" style="max-width: 900px; margin: 0 auto;">
@@ -1566,34 +1757,63 @@
         </div>
     </section>
 
-    <section id="achievements" class="section bg-alt">
+    <section id="achievements" class="section">
         <div class="container">
             <h2 class="section-title reveal">Achievements</h2>
             <div class="achievement-timeline">
                 <div class="timeline-item glass reveal">
-                    <span class="date">2026</span>
+                    <span class="date">01/2026</span>
                     <h3>🥇 National Hackathon Winner</h3>
-                    <p>IIT Kharagpur & Shiv Nadar University. Built a cross-domain AI solution for real-world technical challenges.</p>
+                    <p>IIT Kharagpur & Shiv Nadar University.</p>
                 </div>
                 <div class="timeline-item glass reveal">
-                    <span class="date">2025</span>
+                    <span class="date">02/2026</span>
+                    <h3>🏆 Top 10 - Hacknation 2026</h3>
+                    <p>4th Global AI Hackathon.</p>
+                </div>
+                <div class="timeline-item glass reveal">
+                    <span class="date">10/2025</span>
                     <h3>🥇 AIM'25 Winner</h3>
-                    <p>Secured first place at Infynd's Hackathon. Work with the real world industry level problems</p>
+                    <p>Secured first place at Infynd's Hackathon.</p>
                 </div>
                 <div class="timeline-item glass reveal">
-                    <span class="date">2025</span>
-                    <h3>🥇 HackZilla'25 Winner</h3>
-                    <p>Secured first place at KPR Institute of Technology's Hackathon. Built a cross-domain AI solution for real-world technical challenges.</p>
+                    <span class="date">09/2025</span>
+                    <h3>🥇 HackZilla 25 Winner</h3>
+                    <p>KPR Institute of Technology, IEEE ComSoc.</p>
                 </div>
                 <div class="timeline-item glass reveal">
-                    <span class="date">2025</span>
-                    <h3>🎯 HackBattle'25 Finalist</h3>
-                    <p>VIT Vellore. Selected among the top finalist teams globally for technical architecture.</p>
+                    <span class="date">09/2025</span>
+                    <h3>🎯 Top Finalist - HackBattle'25</h3>
+                    <p>VIT Vellore.</p>
                 </div>
                 <div class="timeline-item glass reveal">
-                    <span class="date">2024</span>
-                    <h3>🏅 33rd Rank – FIFS Gameathon 2.0</h3>
-                    <p>National-level sports data analytics competition focused on predictive modeling.</p>
+                    <span class="date">03/2025</span>
+                    <h3>🏅 33rd Rank - FIFS Gameathon 2.0</h3>
+                    <p>National-level sports data analytics competition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certificates" class="section bg-alt">
+        <div class="container">
+            <h2 class="section-title reveal">Certificates</h2>
+            <div class="skills-grid">
+                <div class="glass reveal" style="padding: 1.5rem; text-align: center;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-certificate" style="color: var(--accent); margin-right: 0.5rem;"></i> Education for Sustainable Development</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">NPTEL (Elite + Silver, 86%)</p>
+                </div>
+                <div class="glass reveal" style="padding: 1.5rem; text-align: center;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-certificate" style="color: var(--accent); margin-right: 0.5rem;"></i> Introduction to IoT</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">NPTEL (Elite + Silver, 76%)</p>
+                </div>
+                <div class="glass reveal" style="padding: 1.5rem; text-align: center;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-certificate" style="color: var(--accent); margin-right: 0.5rem;"></i> Python for Data Science</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">NPTEL (Elite, 74%)</p>
+                </div>
+                <div class="glass reveal" style="padding: 1.5rem; text-align: center;">
+                    <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;"><i class="fas fa-certificate" style="color: var(--accent); margin-right: 0.5rem;"></i> Enhancing Soft Skills</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">NPTEL (Elite, 69%)</p>
                 </div>
             </div>
         </div>
@@ -1604,6 +1824,7 @@
             <div class="contact-card glass reveal">
                 <h2>Get In Touch</h2>
                 <p>I am currently open to internships and collaborative AI projects. Let's build something amazing together!</p>
+                <p>Based in Salem, Tamil Nadu · currently a Software Developer Intern at Adya AI.</p>
                 <div class="contact-links">
                     <a href="mailto:dhanushnataraj06@gmail.com" class="c-link">
                         <i class="fas fa-envelope"></i> Email
@@ -1613,6 +1834,9 @@
                     </a>
                     <a href="https://github.com/DhanushN2005" target="_blank" class="c-link">
                         <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://drive.google.com/file/d/1GecgiR4UeG6h92uCQoHOSjTmz0LlSASD/view?usp=sharing" target="_blank" class="c-link">
+                        <i class="fas fa-file-pdf"></i> Resume (Drive)
                     </a>
                     <a href="tel:+919342514011" target="_blank" class="c-link">
                         <i class="fas fa-phone"></i> +91 9342514011
@@ -1759,9 +1983,11 @@
         
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
+            const open = navLinks.classList.contains('active');
+            mobileMenuBtn.setAttribute('aria-expanded', open);
+            mobileMenuBtn.innerHTML = open
+                ? '<i class="fas fa-times" aria-hidden="true"></i>'
+                : '<i class="fas fa-bars" aria-hidden="true"></i>';
         });
 
         document.querySelectorAll('.nav-link').forEach(link => {
@@ -1770,6 +1996,44 @@
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
+
+        // Keyboard access for flip cards (works for GitHub cards added later too)
+        function makeCardsFocusable() {
+            document.querySelectorAll('.project-card:not([tabindex])').forEach(card => {
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-pressed', 'false');
+            });
+        }
+        makeCardsFocusable();
+        new MutationObserver(makeCardsFocusable).observe(document.getElementById('projectContainer'), { childList: true });
+
+        document.addEventListener('keydown', e => {
+            const card = e.target.closest && e.target.closest('.project-card');
+            if (card && e.target === card && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                card.classList.toggle('flipped');
+                card.setAttribute('aria-pressed', card.classList.contains('flipped'));
+            }
+        });
+
+        // Clicking a repo/code link should open it without flipping the card back
+        document.addEventListener('click', e => {
+            if (e.target.closest('.project-card a')) e.stopPropagation();
+        }, true);
+
+        // Highlight the nav link of the section currently in view
+        const spyLinks = new Map();
+        document.querySelectorAll('.nav-link').forEach(l => spyLinks.set(l.getAttribute('href').slice(1), l));
+        const spy = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && spyLinks.has(entry.target.id)) {
+                    spyLinks.forEach(l => l.classList.remove('current'));
+                    spyLinks.get(entry.target.id).classList.add('current');
+                }
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        document.querySelectorAll('section[id]').forEach(s => spy.observe(s));
 
         const navbar = document.getElementById('navbar');
         
